@@ -32,6 +32,12 @@
         <dependency>
             <groupId>org.wso2.carbon.identity.framework</groupId>
             <artifactId>org.wso2.carbon.identity.application.authentication.framework</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-collections</groupId>
+                    <artifactId>commons-collections</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.felix</groupId>
@@ -51,6 +57,11 @@
                 <groupId>org.apache.felix</groupId>
                 <artifactId>org.apache.felix.scr.ds-annotations</artifactId>
                 <version>${apache.felix.scr.ds.annotations.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>3.2.2</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -96,29 +107,30 @@
                         <Import-Package>
                             javax.servlet.*,
 
+                            org.apache.commons.collections,
                             org.apache.commons.lang,
                             org.apache.commons.logging,
-                            org.apache.commons.collections,
                             org.osgi.framework,
                             org.osgi.service.component,
 
+                            org.wso2.carbon.identity.application.authentication.framework,
                             org.wso2.carbon.identity.application.authentication.framework.config.model,
                             org.wso2.carbon.identity.application.authentication.framework.context,
                             org.wso2.carbon.identity.application.authentication.framework.exception,
-                            org.wso2.carbon.identity.application.authentication.framework.handler.request,
-                            org.wso2.carbon.identity.application.authentication.framework.model,
-                            org.wso2.carbon.identity.application.authentication.framework.handler.request.impl,
-                            org.wso2.carbon.identity.application.authentication.framework.util,
-                            org.wso2.carbon.identity.application.authentication.framework,
-                            org.wso2.carbon.identity.application.authentication.framework.config,
                             org.wso2.carbon.identity.application.authentication.framework.handler.claims,
+                            org.wso2.carbon.identity.application.authentication.framework.handler.request,
+                            org.wso2.carbon.identity.application.authentication.framework.handler.request.impl,
+                            org.wso2.carbon.identity.application.authentication.framework.model,
+                            org.wso2.carbon.identity.application.authentication.framework.util,
+                            org.wso2.carbon.identity.application.common.model,
+                            org.wso2.carbon.identity.core.util,
+                            org.wso2.carbon.identity.user.profile.mgt,
 
-                            org.wso2.carbon.core.util,
-                            org.wso2.carbon.utils.multitenancy,
+                            org.wso2.carbon.user.core,
                             org.wso2.carbon.user.core.util,
-
-                            org.wso2.carbon.identity.user.profile.mgt
+                            org.wso2.carbon.utils.multitenancy
                         </Import-Package>
+
                     </instructions>
                 </configuration>
             </plugin>
@@ -132,7 +144,7 @@
 
 
     <properties>
-        <identity.framework.version>5.12.387</identity.framework.version>
+        <identity.framework.version>5.11.256</identity.framework.version>
         <apache.felix.scr.ds.annotations.version>1.2.10</apache.felix.scr.ds.annotations.version>
         <maven.compiler.plugin.version>3.6.1</maven.compiler.plugin.version>
         <maven.scr.plugin.version>1.22.0</maven.scr.plugin.version>

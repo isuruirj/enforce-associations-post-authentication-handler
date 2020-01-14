@@ -9,9 +9,9 @@ An important fact you need to keep in mind is even though you successfully finis
 WSO2 IS supports to create a mapping (ie. association) between federated identities and local identities.
 
 And when using federated authentication, instead of sending federated user's subject\attributes, WSO2 IS can send associated local user's subject
-attribute if there is an associated account. This is done by enabling `Assert identity using mapped local subject identifier` flag in the [service provider configuration](https://docs.wso2.com/display/IS580/Configuring+Local+and+Outbound+Authentication+for+a+Service+Provider).
+attribute if there is an associated account. This is done by enabling `Assert identity using mapped local subject identifier` flag in the [service provider configuration](https://docs.wso2.com/display/IS560/Configuring+Local+and+Outbound+Authentication+for+a+Service+Provider).
 
-This capability is handled by [PostAuthAssociationHandler](https://github.com/wso2/carbon-identity-framework/blob/v5.12.387/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/handler/request/impl/PostAuthAssociationHandler.java), but it's treating mapping from federated subject to local subject as an optional step. ie. It's convert federated subject to local subject if there is a association for that federated subject. Otherwise its returns federated subject to the service provider.
+This capability is handled by [PostAuthAssociationHandler](https://github.com/wso2/carbon-identity-framework/blob/v5.11.256/components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/main/java/org/wso2/carbon/identity/application/authentication/framework/handler/request/impl/PostAuthAssociationHandler.java), but it's treating mapping from federated subject to local subject as an optional step. ie. It's convert federated subject to local subject if there is a association for that federated subject. Otherwise its returns federated subject to the service provider.
 
 As some service providers always expects local subjects as those cannot handle federated subjects or those expects some additional attributes\features that need local subject, in some cases its need to break the authentication flow if there is no association exists.
 
@@ -28,7 +28,7 @@ This extension can be used to,
 - [How to test](#how-to-test)
 
 ## Tested versions
-* IS 5.8.0
+* IS 5.6.0
 
 ## How to build
 
@@ -47,20 +47,14 @@ This extension can be used to,
 1. Build the sample as mentioned in [How to build](#how-to-build) section.
 2. Copy `target/org.wso2.is.sample.post.authn.handler.association.enforcer-1.0.0-SNAPSHOT.jar` to `<IS_HOME>/repository/components/dropins/` directory.
 3. Open `<IS_HOME>/repository/conf/identity/identity.xml`.
-4. Search for default association handler: `PostAuthAssociationHandler` and turn if off by setting `enable` attribute to `false` as follows,
-```
-        <EventListener type="org.wso2.carbon.identity.core.handler.AbstractIdentityHandler"
-                       name="org.wso2.carbon.identity.application.authentication.framework.handler.request.impl.PostAuthAssociationHandler"
-                       orderId="25" enable="false"/>
-```
-5. Add new `EventListener` for the new `AssociationEnforcerPostAuthenticationHandler` as follows,
+4. Add new `EventListener` for the new `AssociationEnforcerPostAuthenticationHandler` as follows,
 ```
         <EventListener type="org.wso2.carbon.identity.core.handler.AbstractIdentityHandler"
                        name="org.wso2.carbon.identity.post.authn.handler.association.enforcer.AssociationEnforcerPostAuthenticationHandler"
                        orderId="25" enable="true"/>
 ```
-6. Save and close `<IS_HOME>/repository/conf/identity/identity.xml`.
-7. Start the server.
+5. Save and close `<IS_HOME>/repository/conf/identity/identity.xml`.
+6. Start the server.
 
 ## How to test
 
